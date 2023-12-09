@@ -1,0 +1,172 @@
+{
+    "STATE": [
+        {
+            "ALABAMA": [
+                {
+                    "JOBS": "Retail Salespersons,Cashiers,Registred Nurses,Miscellaneous Assemblers and Fabricators,Secretaries and Administrative Assistants,Stockers and Order Fillers,Laborers and Freight,Fast Food and Counter Workers,Heavy and Tractor-Trailer Truck Drivers,General and Operations Managers",
+                    "EMPLOYEES": "58.770,51.620,49.370,44.820,44.070,44.010,41.060,38.640,36,730,36.550"
+                }
+            ]
+        },
+        {
+            "ALASKA": [
+                {
+                    "JOBS": "Retail Salespersons,Registred Nurses,Stockers and Order Fillers,General and Operations Managers,Home Health and Personal Care Aides, Fast Food and Counter Workers,Office Clerks,Janitors and Cleaners,Bookkeeping",
+                    "EMPLOYEES": "8.230,6.730,6.690,6.390,6.310,6.210,5.020,4.920,4.870,4.690"
+                }
+            ]
+        },
+        {
+            "ARIZONA": [
+                {
+                    "JOBS": "Customer Service Representatives,General and Operations Managers,Fast Food and Counter Workers,Retail Salespersons,Laborers and Freight,Home Health and Personal Care Aids,Cashiers,Stockers and Order Fillers,Registred Nurses,Waiters and Waitresses",
+                    "EMPLOYEES": "106.950,91.220,83.440,82.280,71.310,63.390,61.790,60.920,56.040,51.070"
+                }
+            ]
+        },
+        {
+            "ARKANSAS": [
+                {
+                    "JOBS": "Fast Food and Counter Workers,Cashiers,General and Operations Managers, Heavy and Tractor-Trailer Truck Drivers,Retail Salespersons,Stockers and Order Fillers,Laborers and Freight,Registred Nurses,Office Clerks,Customer Service Representatives",
+                    "EMPLOYEES": "36.520,32.840,32.300,31.820,31.290,28.930,28.920,28.490,26.800,19.200"
+                }
+            ]
+        },
+        {
+            "CALIFORNIA": [
+                {
+                    "JOBS": "Home Health and Personal Care Aides, Fast Food and Counter Workers,Cashiers,Laborers and Freight,Retail Salespersons,Registred Nurses,Stockers and Order Fillers,General and Operations Managers,Office Clerks,Software Developers",
+                    "EMPLOYEES": "773.350"
+                }
+            ]
+        },
+        {
+            "COLORADO": [
+                {
+                    "JOBS": "Retail Salespersons,Fast Food and Counter Workers,Registred Nurses,Stockers and Order Fillers, Cashiers,Customer Service Representatives,General and Operations Managers,Business Operations Specialists,Waiter and Waitresses,Software Developers",
+                    "EMPLOYEES": "80.000,75.490,52.390,51.350,50.200,49.170,46.730,44.240,41.770,40.930"
+                }
+            ]
+        },
+        {
+            "CONNECTICUT": [
+                {
+                    "JOBS": "General and Operations Managers,Home Health and Personal Care Aides,Retail Salespersons,Cashiers,Registred Nurses,Stockers and Order Fillers,Customer Service Representatives,Fast Food and Counter Workers,Janitors and Cleaners,First-Line Supervisors of Office Administrative Support Workers",
+                    "EMPLOYEES": "42.090,41.230,39.620,37.320,34.290,33.520,30.140,28.880,28.770,26.770"
+                }
+            ]
+        },
+        {
+            "DELAWARE": [
+                {
+                    "JOBS": "Retail Salespersons,Registred Nurses,Cashiers,Fast Food and Counter Workers,Home Health and Personal Care Aides,Secretaries and Administrative Assistants,Heavy and Tractor-Trailer Truck Drivers,Customer Service Representatives,Janitors and Cleaners,Stockers and Order Fillers",
+                    "EMPLOYEES": "13.440,11.490,11.450,10.780,9.030,7.540,7.240,7.200,6.960,6.840"
+                }
+            ]
+        },
+        {
+            "DISTRICT OF COLUMBIA": [
+                {
+                    "JOBS": "Business Operations Specialists,Lawyers,General and Operations Managers,Managers,Management Analysts,Computer Occupations,Public Relation Specialists,Security Guards,Secretaries and Administrative Assistants,Housekeeping Cleaners",
+                    "EMPLOYEES": "36.950,33.610,32.040,19.930,19.230,17.880,17.400,14.440,13.090,12.630"
+                }
+            ]
+        },
+        {
+            "FLORIDA": [
+                {
+                    "JOBS": "Retail Salespersons,Customer Service Representatives,Stockers and Order Fillers,Cashiers,Registred Nurses,Office Clerks,Waiters and Waitresses,Fast Food and Counter Workers,General and Operations Managers,Janitors and Cleaners",
+                    "EMPLOYEES": "298.000,250.410,239.510,217.210,197.630,193.290,183.470,180.440,124.950"
+                }
+            ]
+        },
+        {
+            "GEORGIA": [
+                {
+                    "JOBS": "Retail Salespersons,Laborers and Freight,Fast Food and Counter Workers,Customer Service Representatives,General and Operations Managers,Cashiers,Stockers and Order Fillers,Registred Nurses,Waiters and Waitresses,Heavy and Tractor-Trailer Truck Drivers",
+                    "EMPLOYEES": "137.880,129.190,116.240,111.510,104.200,98.830,86.350,82.970,76.520,74.970"
+                }
+            ]
+        },
+        {
+            "GUAM": [
+                {
+                    "JOBS": "Cashiers,Carpenters,Stockers and Order Fillers,Waiters and Waitresses,General and Operations Managers,Secretaries and Administrative Assistants,Retail Salespersons,Construction Laborers,Administrative Services Managers,First-Line Supervisors of Office and Administrative Support Workers",
+                    "EMPLOYEES": "2.230,1.380,1.330,1.310,1.290,1.180,1.120,1.090,1.080,1.030"
+                }
+            ]
+        },
+        {
+            "HAWAII": [
+                {
+                    "JOBS": "Fast Food and Counter Workers,Retail Salespersons,Office Clerks,Cashiers,Waiters and Waitresses,General and Operations Managers,Registred Nurses,Janitors and Cleaners,Secondary School Teachers",
+                    "EMPLOYEES": "20.340,16.540,16.530,14.790,12.950,14.440,11.800,11.090,9.800,9.510"
+                }
+            ]
+        },
+        {
+            "IDAHO": [
+                {
+                    "JOBS": "General and Operations Managers,Fast Food and Counter Workers,Retail Salespersons,Customer Service Representatives,Home Health and Personal Care Aides,Office Clerks,Cashiers,Heavy and Tractor-Trailer Truck Drivers,Registred Nurses,Laborers and Freight",
+                    "EMPLOYEES": "24.790,22.350,19.220,10."
+                }
+            ]
+        },
+        {
+            "": [
+                {
+                    "JOBS": "",
+                    "EMPLOYEES": ""
+                }
+            ]
+        },
+        {
+            "INDIANA": [
+                {
+                    "JOBS": "Laborers and Freight,Fast Food and Counter Workers,Miscellaneous Assemblers and Fabricators,Retail Salespersons,Registred Nurses,Office Clerks,Cashiers,Stockers and Order,Fillers,Heavy and Tractor-Trailer Truck Drivers,Customer Service Representatives",
+                    "EMPLOYEES": "103.050,90.690,88.620,83.760,67.350,66.510,65.410,58.440,56.350,54.640"
+                }
+            ]
+        },
+        {
+            "IOWA": [
+                {
+                    "JOBS": "Cashiers,Heavy and Tractor-Trailer Truck Drivers,General and Operations Managers,Fast Food and Counter Workers,Registred Nurses,Retail Salespersons,Laborers and Freight,Customer Service Representatives,Janitors and Cleaners,Office Clerks",
+                    "EMPLOYEES": "47.090,38.390,36.100,35.810,34.050,33.940,30.780,29.580,26.590,26.380"
+                }
+            ]
+        },
+        {
+            "KANSAS": [
+                {
+                    "JOBS": "Fast Food and Counter Workers,Cashiers,Customer Serviuce Representatives, Retail Salespersons,Registred Nurses,Stockers and Order Fillers,Secretaries and Administrative Assistants,Home Health and Personal Care Aides,General and Operations Managers,Heavy and Tractor-Trailer Truck Drivers",
+                    "EMPLOYEES": "34.720,33.720,32.920,30.800,30.520,28.430,27.720,25.940,24.550,22.970"
+                }
+            ]
+        },
+        {
+            "KENTUCKY": [
+                {
+                    "JOBS": "Laborers and Freight,Stockers and Order Fillers,Miscellaneous Assemblers and Fabricators,General and Operations Managers,Cashiers,Registred Nurses,Retail Salespersons,Cooks,Customer Service Representatives,Heavy and Tractor-Trailer Truck Drivers",
+                    "EMPLOYEES": "57.340,50.090,49.590,48.190,46.490,44.970,44.610,41.480,35.830,28.210"
+                }
+            ]
+        },
+        {
+            "LOUISIANA": [
+                {
+                    "JOBS": "Cashiers,Retail Salespersons,Registred Nurses,General and Operations Managers,Laborers and Freight,Home Health and Personal Care Aides,Secretaries and Administrative Assistants,Office Clerks,Janitors and Cleaners,Waiters and Waitresses",
+                    "EMPLOYEES": "58.890,49.310,43.790,38.910,37.540,34.870,33.900,30.500,30.320,29.730"
+                }
+            ]
+        },
+        {
+            "MAINE": [
+                {
+                    "JOBS": "Retail Salespersons,Home Health and Personal Care Aides,Registred Nurses,Cashiers,General and Operations Managers,Fast Food and Counter Workers,Stockers and Order Fillers,Office Clerks,Janitors and Cleaners,Heavy and Tractor-Trailer Truck Drivers",
+                    "EMPLOYEES": "17.420,16.050,14.610,12.890,12.880,12.070,11.820,10.030,9.910"
+                }
+            ]
+        }
+    ]
+}

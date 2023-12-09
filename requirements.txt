@@ -1,3 +1,6 @@
 requests
 json
 np
+openai
+dotenv
+urllib

@@ -27,19 +27,11 @@ request_body = {
     "filters": {
         "and": [
             {
-                "attribute": "company_location",
+                "attribute": "company_name",
                 "relation": "equals",
-                "value": {
-                    "country": "United States",
-                    "region": region
-                },
+                "value": "London Pub",
                 "strictness": 3
-            },
-            {
-                "attribute": "company_industry",
-                "relation": "equals",
-                "value": industry,
-            }
+        }
         ]
     }
 }
@@ -107,8 +99,6 @@ def get_state_companies():
                     for company in request_results:
                         if 'estimated_revenue' in company.keys():
                             company_list[company['company_name']] = company['estimated_revenue']
-                        else:
-                            company_list[company['company_name']] = None
 
                     next_page = response.json()["pagination"]["next"]
                     params["pagination_token"] = next_page
@@ -121,6 +111,24 @@ def get_state_companies():
                     json.dump(companies, res, indent=4, sort_keys=True)
 
 
-get_state_companies()
+def count_revenues():
+    with open("state_companies.json", "r") as f:
+        companies = json.load(f)
+        good = []
+        for state in companies.keys():
+            total = len(companies[state])
+            res = list(filter(lambda x: companies[state][x] is not None, companies[state]))
+            # print(state, total, len(res) / total)
+            if len(res) / total > 0.5:
+                good.append(state)
+        print(len(states))
+        print(len(good))
+
+
+
+count_revenues()
+
+# get_state_companies()
 # response = requests.post(url, headers=headers, json=request_body, params=params)
+# print(response.json()["result"])
 # print(len(response.json()['result']))

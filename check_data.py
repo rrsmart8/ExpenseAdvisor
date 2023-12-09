@@ -5,7 +5,14 @@ import requests
 import urllib.request
 import re
 from bs4 import BeautifulSoup
+from get_request_criteria import get_request_criteria
 
+# states = "Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming"
+states = "New York, Texas"
+states = states.split(", ")
+
+industries = "IT, Real Estate, Apparel, Media & Telecom, Construction, Business, Churches, Temples & Mosque, Entertainment & Hobbies, Community, Food & Beverage, Health & Medical, Home & Garden, Transportation & Shipping, Marketing & Sales, Travel & Tourism, Finance, Education, Agriculture & Farms, Manufacturing & Wholesale, Automotive, Petroleum Refining & Related Activities, Services, Beauty, Electrical & Electronic Stores, Sports, Legal, Retail, Industrial Production, Pets, Fashion Accessories Stores, Others, Textile Production, Boat Services, Funeral Services, Driving School, Wedding & Event Planning Services, Solar Energy Company, Gift & Boutique Shops, Utility Companies, Care Services, Food Production, Food Production & Distribution, Wood & Paper Manufacturing, Oil, Gas & Fuel Companies, General Stores & Hardware Stores"
+industries = industries.split(", ")
 
 def scrape_states_gdp(url):
     data = pd.read_html(requests.get(url).content)[0].to_csv()
@@ -121,6 +128,9 @@ def get_living_index(path):
 
     return data
 
+def get_disproprotionality(path):
+    data = pd.read_csv(path)
+    return data
 
 def check_data(data):
     pass
@@ -129,8 +139,20 @@ def check_data(data):
 def main():
     data_living = get_living_index("datasets/Cost_of_living_index_US.csv")
     data_gdp = get_states_gdp("datasets/states_gdp.csv")
+    data_disproprotionality = get_disproprotionality("datasets/disproprotionality.csv")
+    data_common_jobs = pd.read_csv("datasets/common_jobs.csv")
 
-    prepare_common_jobs_data("datasets/common_jobs.txt")
+    request = get_request_criteria(states, "IT")
+    anual_salaries = []
+    top_5_jobs = []
+    age_range = []
+    for i in range(len(request)):
+        anual_salaries.append(request[i][0])
+        top_5_jobs.append(request[i][1])
+        age_range.append(request[i][2])
+
+    industry = "IT"
+
 
 
 if __name__ == "__main__":

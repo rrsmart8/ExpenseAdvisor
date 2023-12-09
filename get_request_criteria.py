@@ -16,7 +16,7 @@ def prelucrate_age_range(age_range_response):
     age_range = age_range_response
     return age_range
 
-def get_request_critaeria(areas, industry):
+def get_request_criteria(areas, industry):
 
     # Make an array of responses to the questions
     area_responses = []
@@ -44,7 +44,7 @@ def main():
     industry = 'software engineering'
 
 
-    print(get_request_critaeria(areas, industry))
+    print(get_request_criteria(areas, industry))
 
 
 if __name__ == "__main__":

@@ -1,6 +1,5 @@
 import requests
 import json
-from calculate_mean_revenue import calculate_mean_revenue
 
 from ask_chat_gpt import ask_chat_gpt
 
@@ -11,7 +10,7 @@ def get_user_data():
     data = {
 
         "Company Name": "Samsung",
-        "Revenue": 1000000,
+        "Revenue": 5400000000,
         "Industry": "Electronics",
         "State": "New York",
 
@@ -66,10 +65,40 @@ def correct_industry(industry):
 
 # TODO: Parse the United States company list and calculate the mean revenue
 
+def calculate_mean_revenue(file_path):
+    # Load the JSON data
+    try:
+        data = json.load(open(file_path, "r"))
+    except json.JSONDecodeError:
+        print("Error reading JSON file.")
+        return None
+
+    # Extracting revenue values
+    states_revenue = []
+    for state in data:
+        sum = 0
+        count = 0
+        for company,revenue in data[state].items():
+            if revenue is not None:
+                sum += revenue
+                count += 1
+        states_revenue.append([state, sum / count])
+
+    return states_revenue
+
+
+def check_data(user, areas):
     # Get the data from temp.json
-    mean = calculate_mean_revenue("temp.json")
+    states_mean = calculate_mean_revenue("temp.json")
+
+    for i in range(len(states_mean)):
+        if states_mean[i][1] > user["Revenue"]:
+            areas.remove(states_mean[i][0])
 
 # TODO: Check the industry demand and sort them
+
+
+
 
 
 # TODO: Check employee
@@ -82,6 +111,13 @@ def main():
     check_company_size(data["Company Name"])
     industry = correct_industry(data["Industry"])
     data["Industry"] = industry
+
+    states = "Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming"
+    states = states.split(", ")
+
+    check_data(data, states)
+
+    print(states)
 
 if __name__ == "__main__":
     main()

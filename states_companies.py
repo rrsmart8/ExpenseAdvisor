@@ -53,16 +53,16 @@ states = states.split(", ")
 def get_state_companies():
     companies = {}
 
-    with open("temp.json", "r") as f:
+    with open("datasets/temp.json", "r") as f:
         try:
             companies = json.load(f)
         except json.decoder.JSONDecodeError:
             companies = {}
 
-    with open("state_companies.json", "w") as f:
+    with open("datasets/state_companies.json", "w") as f:
         json.dump(companies, f, indent=4)
 
-    with open("state_companies.json", "r") as f:
+    with open("datasets/state_companies.json", "r") as f:
         try:
             companies = json.load(f)
         except json.decoder.JSONDecodeError:
@@ -110,12 +110,12 @@ def get_state_companies():
 
                 companies[state] = company_list
 
-                with open("temp.json", "w") as res:
+                with open("../../Downloads/StartupAdvisor-main/temp.json", "w") as res:
                     json.dump(companies, res, indent=4, sort_keys=True)
 
 
 def count_revenues():
-    with open("state_companies.json", "r") as f:
+    with open("datasets/state_companies.json", "r") as f:
         companies = json.load(f)
         good = []
         for state in companies.keys():

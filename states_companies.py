@@ -27,19 +27,11 @@ request_body = {
     "filters": {
         "and": [
             {
-                "attribute": "company_location",
+                "attribute": "company_name",
                 "relation": "equals",
-                "value": {
-                    "country": "United States",
-                    "region": region
-                },
+                "value": "London Pub",
                 "strictness": 3
-            },
-            {
-                "attribute": "company_industry",
-                "relation": "equals",
-                "value": industry,
-            }
+        }
         ]
     }
 }
@@ -123,4 +115,5 @@ def get_state_companies():
 
 get_state_companies()
 # response = requests.post(url, headers=headers, json=request_body, params=params)
+# print(response.json()["result"])
 # print(len(response.json()['result']))

@@ -6,24 +6,6 @@ import urllib.request
 import re
 from bs4 import BeautifulSoup
 
-def get_living_index(path):
-    data = pd.read_csv(path)
-    data = data.dropna()
-
-    data = data.to_dict(orient='records')
-
-    # Remove all rows that doesnt have a region United States
-    data_us = []
-    for row in data:
-        if "United States" in row['City']:
-            data_us.append(row)
-    
-    # Multiply the Rent index by the average rent in New York
-    for row in data_us:
-        row['Rent Index'] = row['Rent Index'] * 4000
-    
-    return data_us
-
 def scrape_states_gdp(url):
 
     data = pd.read_html(requests.get(url).content)[0].to_csv()
@@ -81,6 +63,23 @@ def get_states_gdp(path):
 
     return states
 
+def get_living_index(path):
+    data = pd.read_csv(path)
+    data = data.dropna()
+
+    data = data.to_dict(orient='records')
+
+    # Remove all rows that doesnt have a region United States
+    data_us = []
+    for row in data:
+        if "United States" in row['City']:
+            data_us.append(row)
+    
+    # Multiply the Rent index by the average rent in New York
+    for row in data_us:
+        row['Rent Index'] = row['Rent Index'] * 4000
+    
+    return data
 
 def check_data(data):
     pass

@@ -38,7 +38,7 @@ def ask_chat_gpt(question):
 
 def main():
     question = input("Ask a question: ")
-    answer = ask_chat_gpt("List me all the states in the USA separated by a comma.")
+    answer = ask_chat_gpt(question)
     print(answer)
 
 if __name__ == "__main__":

@@ -53,7 +53,7 @@ states = states.split(", ")
 def get_state_companies():
     companies = {}
 
-    with open("../../Downloads/StartupAdvisor-main/temp.json", "r") as f:
+    with open("temp.json", "r") as f:
         try:
             companies = json.load(f)
         except json.decoder.JSONDecodeError:

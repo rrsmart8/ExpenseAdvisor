@@ -1,5 +1,6 @@
 import requests
 import json
+from calculate_mean_revenue import calculate_mean_revenue
 
 from ask_chat_gpt import ask_chat_gpt
 
@@ -65,9 +66,14 @@ def correct_industry(industry):
 
 # TODO: Parse the United States company list and calculate the mean revenue
 
+    # Get the data from temp.json
+    mean = calculate_mean_revenue("temp.json")
+
 # TODO: Check the industry demand and sort them
 
+
 # TODO: Check employee
+
 
 def main():
 

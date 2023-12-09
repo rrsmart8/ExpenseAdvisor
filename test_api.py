@@ -60,11 +60,13 @@ def get_companies():
     companies = {}
     industries = get_industries()
 
+    with open("companies_res.json", "r") as f:
+        companies = json.load(f)
+    with open("companies.json", "w") as f:
+        json.dump(companies, f, indent=4)
+
     with open("companies.json", "r") as f:
-        if f.read() != "":
-            companies = json.load(f)
-        else:
-            companies = {}
+        companies = json.load(f)
 
         for found_industry in industries:
             request_body["filters"]["and"][1]["value"] = found_industry

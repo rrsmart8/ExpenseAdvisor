@@ -1,0 +1,52 @@
+ California *	3,598,103	3,755,487	Increase 224,862	Increase 11.6%	Increase 1.0%	$92,190	$96,222	14.69%	14.49%
+ Texas *	2,355,960	2,436,346	Increase 304,191	Increase 12.9%	Increase 5.6%	$78,456	$81,130	8.69%	8.55%
+ New York *	2,053,180	2,135,672	Increase 151,883	Increase 7.5%	Increase 5.0%	$104,344	$108,380	8.11%	8.31%
+ Florida *	1,389,070	1,468,015	Increase 133,482	Increase 10.9%	Increase 6.9%	$62,446	$65,390	5.37%	5.34%
+ Illinois *	1,033,310	1,071,552	Increase 87,636	Increase 9.3%	Increase 5.0%	$82,126	$85,111	4.11%	4.13%
+ Pennsylvania *	923,089	961,946	Increase 78,593	Increase 8.7%	Increase 4.4%	$71,160	$74,109	3.67%	3.72%
+ Ohio *	822,670	852,903	Increase 66,053	Increase 8.7%	Increase 4.3%	$69,978	$72,550	3.22%	3.26%
+ Georgia *	755,698	792,151	Increase 64,071	Increase 9.7%	Increase 5.8%	$69,253	$72,340	2.99%	3.00%
+ New Jersey *	745,422	776,923	Increase 62,476	Increase 8.7%	Increase 4.9%	$80,490	$83,810	2.94%	2.98%
+ North Carolina *	730,072	762,866	Increase 67,951	Increase 11.0%	Increase 6.7%	$68,243	$71,297	2.87%	2.84%
+ Washington *	725,514	761,415	Increase 48,025	Increase 10.5%	Increase 6.7%	$93,193	$97,805	2.92%	2.91%
+ Massachusetts *	688,392	721,876	Increase 47,060	Increase 9.3%	Increase 6.4%	$98,609	$103,340	2.79%	2.81%
+ Virginia *	649,393	676,734	Increase 44,435	Increase 7.7%	Increase 4.0%	$74,789	$77,875	2.59%	2.65%
+ Michigan *	620,696	645,293	Increase 48,490	Increase 10.3%	Increase 6.2%	$61,859	$64,272	2.49%	2.48%
+ Colorado *	484,372	502,026	Increase 48,013	Increase 10.3%	Increase 5.8%	$82,954	$85,816	1.85%	1.84%
+ Tennessee *	475,755	502,664	Increase 48,630	Increase 13.2%	Increase 8.6%	$67,473	$71,198	1.83%	1.78%
+ Maryland *	470,187	488,116	Increase 26,257	Increase 6.7%	Increase 3.2%	$76,279	$79,111	1.92%	1.98%
+ Arizona *	458,950	479,759	Increase 38,923	Increase 10.0%	Increase 5.3%	$62,365	$65,096	1.80%	1.80%
+ Indiana *	455,750	473,353	Increase 42,775	Increase 12.0%	Increase 6.9%	$66,698	$69,203	1.84%	1.81%
+ Minnesota *	446,500	464,987	Increase 34,041	Increase 10.2%	Increase 5.7%	$78,100	$81,150	1.80%	1.80%
+ Wisconsin *	401,792	417,301	Increase 33,181	Increase 8.4%	Increase 3.8%	$68,192	$70,728	1.60%	1.63%
+ Missouri *	389,931	406,936	Increase 31,359	Increase 9.3%	Increase 4.6%	$63,126	$65,847	1.58%	1.59%
+ Connecticut *	321,845	333,102	Increase 23,450	Increase 7.3%	Increase 4.2%	$88,760	$91,763	1.30%	1.33%
+ Oregon *	299,125	316,593	Increase 26,934	Increase 9.5%	Increase 5.4%	$70,548	$74,492	1.17%	1.17%
+ South Carolina *	295,880	308,927	Increase 26,078	Increase 10.3%	Increase 5.9%	$56,066	$58,398	1.18%	1.18%
+ Louisiana *	281,429	289,945	Increase 22,858	Increase 8.4%	Increase 2.4%	$61,313	$63,031	1.12%	1.13%
+ Alabama *	277,817	289,038	Increase 23,707	Increase 8.9%	Increase 4.1%	$54,753	$56,897	1.08%	1.09%
+ Kentucky *	260,304	271,994	Increase 23,122	Increase 10.3%	Increase 4.7%	$57,653	$60,170	1.03%	1.02%
+ Utah *	248,176	259,291	Increase 22,836	Increase 11.5%	Increase 6.7%	$73,424	$76,487	0.96%	0.95%
+ Oklahoma *	240,534	243,350	Increase 25,198	Increase 9.9%	Increase 2.2%	$59,894	$60,385	0.90%	0.91%
+ Iowa *	231,108	241,248	Increase 14,248	Increase 13.2%	Increase 6.4%	$72,221	$75,155	0.96%	0.94%
+ Nevada *	215,918	228,930	Increase 21,431	Increase 12.9%	Increase 7.1%	$67,962	$71,990	0.84%	0.82%
+ Kansas *	210,670	220,402	Increase 19,289	Increase 9.8%	Increase 3.8%	$71,729	$74,962	0.84%	0.84%
+ Arkansas *	165,221	171,152	Increase 16,545	Increase 10.6%	Increase 5.0%	$54,259	$56,115	0.63%	0.63%
+ Nebraska *	161,702	170,145	Increase 15,417	Increase 12.7%	Increase 5.3%	$82,207	$85,931	0.66%	0.64%
+ District of Columbia*	162,314	168,559	Increase 8,644	Increase 5.2%	Increase 2.8%	$242,853	$239,861	0.67%	0.70%
+ Mississippi *	138,740	143,796	Increase 11,432	Increase 9.9%	Increase 4.4%	$47,190	$48,744	0.55%	0.55%
+ New Mexico *	122,115	124,480	Increase 12,532	Increase 10.6%	Increase 2.5%	$57,792	$58,716	0.48%	0.47%
+ Idaho *	109,546	114,923	Increase 13,263	Increase 12.5%	Increase 5.8%	$56,496	$58,855	0.41%	0.40%
+ New Hampshire *	105,414	109,985	Increase 5,741	Increase 12.1%	Increase 8.5%	$75,565	$78,281	0.43%	0.42%
+ Hawaii *	98,219	103,262	Increase 7,123	Increase 8.7%	Increase 4.6%	$68,207	$71,215	0.39%	0.40%
+ West Virginia *	95,588	96,012	Increase 10,154	Increase 15.2%	Increase 4.0%	$53,852	$53,939	0.38%	0.37%
+ Delaware *	87,525	91,581	Increase 6,365	Increase 6.5%	Increase 3.7%	$85,977	$89,785	0.35%	0.37%
+ Maine *	84,497	88,258	Increase 6,534	Increase 9.8%	Increase 5.2%	$61,008	$63,267	0.33%	0.33%
+ North Dakota *	73,267	73,866	Increase 9,707	Increase 15.6%	Increase 2.1%	$94,021	$94,815	0.28%	0.26%
+ Rhode Island *	71,402	74,094	Increase 4,831	Increase 8.9%	Increase 5.5%	$65,362	$67,358	0.29%	0.29%
+ South Dakota *	67,571	70,316	Increase 5,886	Increase 11.7%	Increase 4.9%	$74,268	$77,033	0.27%	0.26%
+ Montana *	65,015	67,785	Increase 6,315	Increase 15.1%	Increase 6.7%	$57,945	$59,986	0.26%	0.25%
+ Alaska *	63,618	63,750	Increase 6,269	Increase 10.3%	Increase 0.3%	$86,722	$86,902	0.24%	0.24%
+ Wyoming *	47,433	47,420	Increase 5,923	Increase 14.6%	Increase 1.1%	$81,586	$81,564	0.18%	0.17%
+ Vermont *	40,617	42,239	Increase 3,513	Increase 8.2%	Increase 3.5%	$62,771	$65,279	0.16%	0.16%
+ United States *	25,462,722	26,529,774	Increase 2,147	Increase 10.1%	Increase 5.7%	$75,557	$79,605	100%	100%

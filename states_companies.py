@@ -27,11 +27,14 @@ request_body = {
     "filters": {
         "and": [
             {
-                "attribute": "company_name",
+                "attribute": "company_location",
                 "relation": "equals",
-                "value": "London Pub",
+                "value": {
+                    "country": "United States",
+                    "region": region
+                },
                 "strictness": 3
-        }
+            }
         ]
     }
 }
@@ -50,7 +53,7 @@ states = states.split(", ")
 def get_state_companies():
     companies = {}
 
-    with open("temp.json", "r") as f:
+    with open("../../Downloads/StartupAdvisor-main/temp.json", "r") as f:
         try:
             companies = json.load(f)
         except json.decoder.JSONDecodeError:
@@ -97,7 +100,7 @@ def get_state_companies():
                     company_counter += len(request_results)
 
                     for company in request_results:
-                        if 'estimated_revenue' in company.keys():
+                        if 'estimated_revenue' in company.keys() and company['estimated_revenue'] is not None:
                             company_list[company['company_name']] = company['estimated_revenue']
 
                     next_page = response.json()["pagination"]["next"]
@@ -107,7 +110,7 @@ def get_state_companies():
 
                 companies[state] = company_list
 
-                with open("temp.json", "w") as res:
+                with open("../../Downloads/StartupAdvisor-main/temp.json", "w") as res:
                     json.dump(companies, res, indent=4, sort_keys=True)
 
 
@@ -126,9 +129,9 @@ def count_revenues():
 
 
 
-count_revenues()
+# count_revenues()
 
-# get_state_companies()
+get_state_companies()
 # response = requests.post(url, headers=headers, json=request_body, params=params)
 # print(response.json()["result"])
 # print(len(response.json()['result']))

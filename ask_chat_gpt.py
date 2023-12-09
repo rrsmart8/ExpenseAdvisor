@@ -38,7 +38,7 @@ def ask_chat_gpt(question):
 
 def main():
     question = input("Ask a question: ")
-    # answer = ask_chat_gpt("Choose just one relevant to a Banker Please? : IT, Real Estate, Apparel, Media & Telecom, Construction, Business, Churches, Temples & Mosque, Entertainment & Hobbies, Community, Food & Beverage, Health & Medical, Home & Garden, Transportation & Shipping, Marketing & Sales, Travel & Tourism, Finance, Education, Agriculture & Farms, Manufacturing & Wholesale, Automotive, Petroleum Refining & Related Activities, Services, Beauty, Electrical & Electronic Stores, Sports, Legal, Retail, Industrial Production, Pets, Fashion Accessories Stores, Others, Textile Production, Boat Services, Funeral Services, Driving School, Wedding & Event Planning Services, Solar Energy Company, Gift & Boutique Shops, Utility Companies, Care Services, Food Production, Food Production & Distribution, Wood & Paper Manufacturing, Oil, Gas & Fuel Companies, General Stores & Hardware Stores,")
+    answer = ask_chat_gpt("List me all the states in the USA separated by a comma.")
     print(answer)
 
 if __name__ == "__main__":

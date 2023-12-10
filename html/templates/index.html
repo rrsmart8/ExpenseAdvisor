@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centered Form with Rounded Edges</title>
+    <title>Centered Form with Loading Indicator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,28 +15,15 @@
             height: 100vh;
         }
 
-        .container {
-            width: 100%;
-            height: 27em;
-            padding: 10px;
-            /* border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #f4f4f4; */
-            align-content: center;
+        .title_container {
             text-align: center;
-            align-items: center;
-            align-self: center;
         }
 
-        .title_container {
-            width: 50em;
-            height: 27em;
+        .container, #header {
+            width: 100%;
             padding: 10px;
-            align-content: center;
             text-align: center;
-            /* border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #f4f4f4; */
+            transition: opacity 1s; /* CSS transition for opacity */
         }
 
         form {
@@ -54,44 +41,87 @@
             margin-bottom: 16px;
             padding: 12px;
             border: 1px solid #ccc;
-            border-radius: 15px; /* Rounded edges */
+            border-radius: 15px;
             width: 45em;
-            box-sizing: border-box; /* Include padding and border in width calculation */
-			text-align: center;
+            box-sizing: border-box;
+            text-align: center;
         }
 
         button {
-			margin-bottom: 16px;
+            margin-bottom: 16px;
             padding: 20px;
-            border-radius: 20px; /* Rounded edges */
+            border-radius: 20px;
             width: 30%;
-            box-sizing: border-box; /* Include padding and border in width calculation */
-			text-align: center;
+            box-sizing: border-box;
+            text-align: center;
             cursor: pointer;
             background-color: #0e0e0e;
             color: #fff;
             border: none;
         }
+
+        .loading-indicator {
+            display: none;
+            font-size: 20px;
+        }
+
+        .content {
+            display: none;
+            text-align: center;
+        }
+
+        #content {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+        }
+
+        #arrowButton {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #0e0e0e;
+        }
+
+        /* This style ensures smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Class for fade-out effect */
+        .fade-out {
+            opacity: 0;
+        }
+
     </style>
 </head>
 <body>
 
 <div class="title_container">
-    <h1>Describe preferences...</h1>
-    <div class="container">
-    <form method="post" action="/">
-        <!-- <label for="username">Username:</label> -->
-        <input type="text" name="industry" id="industry" placeholder="Industry Info">
-
-        <!-- <label for="password">Password:</label> -->
-        <input type="text" name="location" id="location" placeholder="Preffered Location">
-		<input type="text" name="revenue" id="revenue" placeholder="Revenue">
-		<input type="text" name="employees" id="employees" placeholder="Employee Number">
-
-        <button type="submit" onclick="submitForm()">Submit</button>
-    </form>
+    <h1 id="header" class="container">Describe preferences...</h1>
+    <div class="container" id="formContainer">
+        <form method="post" action="#" onsubmit="submitForm(); return false;">
+            <input type="text" name="industry" id="industry" placeholder="Industry Info">
+            <input type="text" name="location" id="location" placeholder="Preferred Location">
+            <input type="text" name="revenue" id="revenue" placeholder="Revenue">
+            <input type="text" name="employees" id="employees" placeholder="Employee Number">
+            <button type="submit">Submit</button>
+        </form>
+        <div class="loading-indicator" id="loadingIndicator">Loading...</div>
+    </div>
 </div>
+
+<div class="content" id="content">
+    <h1>Data Loaded Successfully</h1>
+    <p id="data"></p>
 </div>
+
+<button id="arrowButton" onclick="changeContent()">➔</button>
 
 <script>
     function submitForm() {
@@ -101,6 +131,119 @@
         var revenue = document.getElementById('revenue').value;
         var employees = document.getElementById('employees').value;
 
+        // Log values to console
+        console.log('Industry:', industry, 'Location:', location, 'Revenue:', revenue, 'Employees:', employees);
+
+        // Trigger the loading indicator
+        showLoadingIndicator();
+
+        // Simulate asynchronous action (e.g., sending data to the server)
+        setTimeout(function () {
+            // Hide the loading indicator
+            hideLoadingIndicator();
+
+            // Remove the form from the DOM
+            removeForm();
+
+            // Fetch external data
+            fetchData()
+                .then(data => {
+                    // Ensure that 'data.message' is structured correctly in your JSON file
+                    if (data && data.message) {
+                        // Update content with fetched data
+                        var content = document.getElementById('content');
+                        content.style.display = 'block';
+                        content.textContent = data.message;
+
+                        var arrowButton = document.getElementById('arrowButton');
+                        arrowButton.style.display = 'block';
+
+                        // Add fade-out effect to content
+                        // content.classList.add('fade-out');
+
+                        // Optionally, you can remove the content div from the DOM after the fade-out effect
+                        setTimeout(function () {
+                            // content.remove();
+                        }, 1000); // Wait for 1 second (same duration as the transition)
+                    } else {
+                        console.error('Invalid data structure:', data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }, 2000); // Simulated delay of 2 seconds (adjust as needed)
+    }
+
+    function showLoadingIndicator() {
+        var loadingIndicator = document.getElementById('loadingIndicator');
+        loadingIndicator.style.display = 'block';
+
+        var formContainer = document.getElementById('formContainer');
+        formContainer.classList.add('fade-out');
+
+        var header = document.getElementById('header');
+        header.classList.add('fade-out');
+    }
+
+    function hideLoadingIndicator() {
+        var loadingIndicator = document.getElementById('loadingIndicator');
+        loadingIndicator.style.display = 'none';
+
+        var formContainer = document.getElementById('formContainer');
+        formContainer.classList.remove('fade-out');
+    }
+
+    function removeForm() {
+        var formContainer = document.getElementById('formContainer');
+        formContainer.remove();
+    }
+
+    // Function to simulate fetching external data from a local JSON file using XMLHttpRequest
+    function fetchData() {
+    return new Promise((resolve, reject) => {
+        // Create a new XMLHttpRequest object
+        var xhr = new XMLHttpRequest();
+
+        // Configure it with the request method and URL of the local JSON file
+        xhr.open('GET', 'data.json', true);
+
+        // Set up the onload and onerror event handlers
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                // Request was successful
+                try {
+                    // Log the entire JSON response to the console
+                    console.log('JSON Response:', xhr.responseText);
+
+                    // Parse the JSON response
+                    var jsonResponse = JSON.parse(xhr.responseText);
+                    resolve(jsonResponse);
+                } catch (error) {
+                    reject('Error parsing JSON');
+                }
+            } else {
+                // Request failed
+                reject(xhr.statusText);
+            }
+        };
+
+        xhr.onerror = function () {
+            // Network error
+            reject('Network error');
+        };
+
+        // Send the request
+        xhr.send();
+    });
+    }
+
+    function changeContent() {
+        // Implement the logic to change content here
+        console.log('Arrow button clicked');
+        // For example, you can toggle the visibility of the content div
+        var content = document.getElementById('content');
+        content.style.display = content.style.display === 'none' ? 'block' : 'none';
     }
 </script>
 

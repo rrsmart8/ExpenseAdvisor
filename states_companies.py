@@ -19,7 +19,7 @@ headers = {
     'Content-Type': 'application/json'
 }
 
-industry = "IT"
+industry = "Business"
 region = "California"
 
 # Define the request body as a Python dictionary
@@ -34,6 +34,11 @@ request_body = {
                     "region": region
                 },
                 "strictness": 3
+            },
+            {
+                "attribute": "company_industry",
+                "relation": "equals",
+                "value": industry,
             }
         ]
     }
@@ -50,23 +55,25 @@ states = "Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut,
 states = states.split(", ")
 
 
-def get_state_companies():
+def get_state_companies(industry):
     companies = {}
 
-    with open("datasets/temp.json", "r") as f:
+    with open("temp.json", "r") as f:
         try:
             companies = json.load(f)
         except json.decoder.JSONDecodeError:
             companies = {}
 
-    with open("datasets/state_companies.json", "w") as f:
+    with open("state_companies.json", "w") as f:
         json.dump(companies, f, indent=4)
 
-    with open("datasets/state_companies.json", "r") as f:
+    with open("state_companies.json", "r") as f:
         try:
             companies = json.load(f)
         except json.decoder.JSONDecodeError:
             companies = {}
+
+        request_body["filters"]["and"][1]["value"] = industry
 
         for state in states:
             request_body["filters"]["and"][0]["value"]["region"] = state
@@ -110,12 +117,12 @@ def get_state_companies():
 
                 companies[state] = company_list
 
-                with open("../../Downloads/StartupAdvisor-main/temp.json", "w") as res:
+                with open("temp.json", "w") as res:
                     json.dump(companies, res, indent=4, sort_keys=True)
 
 
 def count_revenues():
-    with open("datasets/state_companies.json", "r") as f:
+    with open("state_companies.json", "r") as f:
         companies = json.load(f)
         good = []
         for state in companies.keys():
@@ -131,7 +138,8 @@ def count_revenues():
 
 # count_revenues()
 
-get_state_companies()
+
+get_state_companies("IT")
 # response = requests.post(url, headers=headers, json=request_body, params=params)
 # print(response.json()["result"])
 # print(len(response.json()['result']))

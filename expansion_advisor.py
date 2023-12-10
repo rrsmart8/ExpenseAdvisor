@@ -9,15 +9,32 @@ import check_data as check
 def get_user_data():
     print("Hello, I am your expansion advisor. I will help you to find the best industry for your business.")
 
+    # Read the user data
+    Company_Name = input("What is the name of your company? ")
+    Revenue = input("What is your revenue? ")
+    Industry = input("What is your industry? ")
+    State = input("What is your state? ")
+    Number_of_Employees = input("How many employees do you want to have at the new location? ")
+
+    # Create a dictionary with the user data
     data = {
+            "Company Name": Company_Name,
+            "Revenue": int(Revenue),
+            "Industry": Industry,
+            "State": State,
+            "Number of Employees": int(Number_of_Employees),
 
-        "Company Name": "McDonald's",
-        "Revenue": 550000000,
-        "Industry": "Food & Beverage",
-        "State": "New York",
-        "Number of Employees": 1000,
+        }
 
-    }
+    # data = {
+    #
+    #     "Company Name": "McDonald's",
+    #     "Revenue": 550000000,
+    #     "Industry": "Food & Beverage",
+    #     "State": "New York",
+    #     "Number of Employees": 1000,
+    #
+    # }
 
     return data
 
@@ -52,10 +69,10 @@ def check_company_size(company_name):
     response = requests.post(url, headers=headers, json=request_body)
 
     if response.status_code != 200 or response.json()["count"] == 0:
-        print("Company not found")
+        print("Company not found in the database")
         return False
 
-    print("Company found")
+    print("Company found in the database")
     return True
 
 # TODO: Correct industry from Search API using ChatGPT API
@@ -146,6 +163,9 @@ def main():
 
     meet_criteria_states = check.check_possible_openings(weight_array,wages_chat, 3000,num_of_employees, 0.5, data["Revenue"])
 
+    if meet_criteria_states == []:
+        print("You don't have sufficient revenue to open a new location in the United States.")
+        return
     print("The best states for your business are: " + str(meet_criteria_states))
 
     # Get the industry index from the industries list
@@ -168,7 +188,7 @@ def main():
     print("----------------------------------------------------------------------------------------\n")
 
     saturated_nieches = []
-    best_choice = None
+    best_choice = ""
 
     for i in range(len(meet_criteria_states)):
         if meet_criteria_states[i][1] > 2:
@@ -177,14 +197,16 @@ def main():
             best_choice = meet_criteria_states[i][0]
             break
 
-
-    print("The saturated nieches are: \n" + str(saturated_nieches))
+    if saturated_nieches == []:
+        print("There are no saturated nieches")
+    else:
+        print("The saturated nieches are: \n" + str(saturated_nieches))
     print()
 
 
-    print("Best choice: \n")
-    print("Open new location " + data["Company Name"] + " in " + best_choice + ".")
-    print("In the industry " + industry +  " and the age range is " + age_range + ".")
+    print("Best choice:")
+    print(" -> Open new location " + data["Company Name"] + " in " + best_choice + ".")
+    print(" -> In the industry " + industry +  " and the age range is " + age_range + ".")
 
 
     print("\nThank you for using our service. We hope you will have a scalable business.")

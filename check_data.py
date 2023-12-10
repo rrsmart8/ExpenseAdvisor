@@ -179,7 +179,7 @@ def get_disproprotionality(path):
 def check_possible_openings(states, wages, rent, number_of_jobs, minimumLimit, my_revenue):
     possible_states = []  # List to hold states that meet the criteria
 
-    for i in range(len(states)):
+    for i in range(len(wages)):
         if wages[i] is not None and number_of_jobs is not None:
             if wages[i] * number_of_jobs + rent < minimumLimit * my_revenue:
                 # Add states that meet the criteria to the new list

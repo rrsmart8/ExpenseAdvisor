@@ -7,13 +7,13 @@ from chat_interaction.ask_chat_gpt import ask_chat_gpt
 import check_data as check
 
 def get_user_data():
-    print("Hello, I am your startup advisor. I will help you to find the best industry for your startup.")
+    print("Hello, I am your expansion advisor. I will help you to find the best industry for your business.")
 
     data = {
 
-        "Company Name": "Samsung",
-        "Revenue": 5400000000,
-        "Industry": "Business",
+        "Company Name": "McDonald's",
+        "Revenue": 550000000,
+        "Industry": "Food & Beverage",
         "State": "New York",
         "Number of Employees": 1000,
 
@@ -126,8 +126,69 @@ def main():
 
     #TODO: Remove from weigth array the states where I cant affor to open with my revenue
     wages_chat = []
-    #check.check_possible_openings(wages_array,wages_chat, data["Number of Employees"], 0.4, data["Revenue"])
-    
+
+   # Open the chat_criterias.json file and load the data
+    try:
+        chat_criterias = json.load(open("datasets/chat_criterias.json", "r"))
+    except json.JSONDecodeError:
+        print("Error reading JSON file.")
+        return None
+
+    # Extracting the anual wages
+    for i in range(len(chat_criterias["anual_salaries"])):
+        wages_chat.append(chat_criterias["anual_salaries"][i].replace(",", ""))
+
+    # Convert it to a number array
+    wages_chat = [int(i) for i in wages_chat]
+
+    # Print all data before
+    num_of_employees = data["Number of Employees"]
+
+    meet_criteria_states = check.check_possible_openings(weight_array,wages_chat, 3000,num_of_employees, 0.5, data["Revenue"])
+
+    print("The best states for your business are: " + str(meet_criteria_states))
+
+    # Get the industry index from the industries list
+    industry_index = -1
+
+    ind_array = const.industries.split(", ")
+
+    for i in range(len(ind_array)):
+        if ind_array[i] == industry:
+            industry_index = i
+            break
+
+    if industry_index == -1:
+        print("Industry not found")
+        return
+
+    # Get the age range from the chat_criterias.json file
+    age_range = chat_criterias["age_range"][industry_index]
+
+    print("----------------------------------------------------------------------------------------\n")
+
+    saturated_nieches = []
+    best_choice = None
+
+    for i in range(len(meet_criteria_states)):
+        if meet_criteria_states[i][1] > 2:
+            saturated_nieches.append(meet_criteria_states[i][0])
+        else:
+            best_choice = meet_criteria_states[i][0]
+            break
+
+
+    print("The saturated nieches are: \n" + str(saturated_nieches))
+    print()
+
+
+    print("Best choice: \n")
+    print("Open new location " + data["Company Name"] + " in " + best_choice + ".")
+    print("In the industry " + industry +  " and the age range is " + age_range + ".")
+
+
+    print("\nThank you for using our service. We hope you will have a scalable business.")
+
 
 
 if __name__ == "__main__":

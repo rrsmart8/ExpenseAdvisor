@@ -58,7 +58,6 @@ def prepare_industry_demand(path):
                 f.write(job + ",")
             f.write("\n")
 
-def scrape_disproprotionality(url):
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -141,20 +140,17 @@ def get_states_gdp(path):
     states = np.column_stack((states, gdp))
 
     return states
-
 def create_chat_criterias(states, industry):
-    request = get_request_criteria(states, industry)
-    anual_salaries = []
-    top_10_jobs = []
-    age_range = []
-    for i in range(len(request)):
-        anual_salaries.append(request[i][0])
-        top_10_jobs.append(request[i][1])
-        age_range.append(request[i][2])
+        request = get_request_criteria(states, industry)
+        anual_salaries = []
+        age_ranges = []
+        for i in range(len(request)):
+            anual_salaries.append(request[i][0])
+            age_ranges.append(request[i][1])
 
-    with open("datasets/chat_criterias.json", "w") as f:
-        json.dump({"anual_salaries": anual_salaries, "top_10_jobs": top_10_jobs, "age_range": age_range}, f)
-
+        # Save the chat criteria to a JSON file
+        with open("datasets/chat_criterias.json", "w") as f:
+            json.dump({"anual_salaries": anual_salaries, "age_range": age_ranges}, f)
 
 
 def get_living_index(path):
@@ -179,12 +175,17 @@ def get_disproprotionality(path):
     data = pd.read_csv(path)
     return data
 
-def check_possible_openings(states, wages, number_of_jobs, minimumLimit, my_revenue):
-    
+
+def check_possible_openings(states, wages, rent, number_of_jobs, minimumLimit, my_revenue):
+    possible_states = []  # List to hold states that meet the criteria
+
     for i in range(len(states)):
-        if wages[i] is not None and number_of_jobs[i] is not None:
-            if wages[i] * number_of_jobs < minimumLimit * my_revenue:
-                states.pop(i)
+        if wages[i] is not None and number_of_jobs is not None:
+            if wages[i] * number_of_jobs + rent < minimumLimit * my_revenue:
+                # Add states that meet the criteria to the new list
+                possible_states.append(states[i])
+
+    return possible_states
         
 
 

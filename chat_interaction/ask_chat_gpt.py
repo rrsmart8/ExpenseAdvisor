@@ -23,7 +23,7 @@ def ask_chat_gpt(question):
             messages=[
                 {
                     "role": "user",
-                    "content": question + "Give me just the short answer without any explanation (it is is a number, just the number), (if there are some jobs, just list them))",
+                    "content": question + "Give me just the short answer without any explanation (it is is a salary, just the aproximete number but print it), (for age range just give me an aproximatley range))",
                 }
             ],
             model="gpt-4",  # Change this if you're using a different model

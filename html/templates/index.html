@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Centered Form with Loading Indicator</title>
     <style>
+        @font-face {
+            font-family: 'WorkSans-Italic';
+            src: url('../fonts/static/WorkSans-Italic.ttf') format('truetype');
+            /* Add other font formats if needed */
+        }
+        @font-face {
+            font-family: 'WorkSans-SemiBold';
+            src: url('../fonts/static/WorkSans-SemiBoldItalic.ttf') format('truetype');
+            /* Add other font formats if needed */
+        }
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -67,27 +77,26 @@
 
         .content {
             display: none;
-            text-align: center;
+            text-align: justify;
         }
 
         #content {
             position: absolute;
             top: 100px;
-            left: 100px;
+            left: 150px;
         }
 
         #arrowButton {
             display: none;
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 500px;
+            left: 150px;
             font-size: 20px;
             cursor: pointer;
             background: none;
             border: none;
             color: #0e0e0e;
         }
-
         /* This style ensures smooth scrolling */
         html {
             scroll-behavior: smooth;
@@ -96,6 +105,7 @@
         /* Class for fade-out effect */
         .fade-out {
             opacity: 0;
+            transition: opacity 1s; /* CSS transition for opacity */
         }
 
     </style>
@@ -116,14 +126,22 @@
     </div>
 </div>
 
-<div class="content" id="content">
-    <h1>Data Loaded Successfully</h1>
-    <p id="data"></p>
+<div class="content fade-out" id="content">
+    <p id="state" style="font-size: 50px; font-family: 'WorkSans-SemiBold',sans-serif"></p>
+    <p id="score" style="font-size: 30px; padding-left: 2em"></p>
+    <p id="avg_salary" style="font-size: 30px; padding-left: 2em"></p>
+    <p id="avg_age" style="font-size: 30px; padding-left: 2em"></p>
 </div>
+<img id="image" width="700" style="display: none" src="../map.png" alt="US map">
 
 <button id="arrowButton" onclick="changeContent()">➔</button>
 
 <script>
+    // Global variable to store JSON data and keys
+    var jsonData;
+    var keys = [];
+    var currentIndex = 0;
+
     function submitForm() {
         // Get input values
         var industry = document.getElementById('industry').value;
@@ -147,33 +165,59 @@
 
             // Fetch external data
             fetchData()
-                .then(data => {
-                    // Ensure that 'data.message' is structured correctly in your JSON file
-                    if (data && data.message) {
-                        // Update content with fetched data
-                        var content = document.getElementById('content');
-                        content.style.display = 'block';
-                        content.textContent = data.message;
+            .then(data => {
+                // Ensure that 'data.message' is structured correctly in your JSON file
+                if (data) {
+                    // Store JSON data and keys
+                    jsonData = data;
+                    keys = Object.keys(data);
 
-                        var arrowButton = document.getElementById('arrowButton');
-                        arrowButton.style.display = 'block';
+                    // Update content with fetched data
+                    var content = document.getElementById('content');
+                    content.style.display = 'block';
 
-                        // Add fade-out effect to content
-                        // content.classList.add('fade-out');
+                    var arrowButton = document.getElementById('arrowButton');
+                    arrowButton.style.display = 'block';
 
-                        // Optionally, you can remove the content div from the DOM after the fade-out effect
-                        setTimeout(function () {
-                            // content.remove();
-                        }, 1000); // Wait for 1 second (same duration as the transition)
-                    } else {
-                        console.error('Invalid data structure:', data);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                });
-        }, 2000); // Simulated delay of 2 seconds (adjust as needed)
-    }
+                    var image = document.getElementById('image');
+                    image.style.display = 'block';
+
+                    // Use the first key from the keys array
+                    var currentKey = keys[0];
+
+                    var p = document.getElementById('state');
+                    arrowButton.style.display = 'block';
+                    p.textContent = "State: " + currentKey;
+
+                    var p = document.getElementById('score');
+                    arrowButton.style.display = 'block';
+                    p.textContent = "Score: " + jsonData[currentKey].score;
+
+                    var p = document.getElementById('avg_salary');
+                    arrowButton.style.display = 'block';
+                    p.textContent = "Average salary: " + jsonData[currentKey].avg_salary;
+
+                    var p = document.getElementById('avg_age');
+                    arrowButton.style.display = 'block';
+                    p.textContent = "Average age: " + jsonData[currentKey].avg_age;
+
+                    // Remove fade-out class to trigger fade-in effect
+                    content.classList.remove('fade-out');
+
+                    // Optionally, you can remove the content div from the DOM after the fade-out effect
+                    setTimeout(function () {
+                        // content.remove();
+                    }, 1000); // Wait for 1 second (same duration as the transition)
+                } else {
+                    console.error('Invalid data structure:', data);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, 2000); // Simulated delay of 2 seconds (adjust as needed)
+}
+
 
     function showLoadingIndicator() {
         var loadingIndicator = document.getElementById('loadingIndicator');
@@ -239,12 +283,41 @@
     }
 
     function changeContent() {
-        // Implement the logic to change content here
-        console.log('Arrow button clicked');
-        // For example, you can toggle the visibility of the content div
-        var content = document.getElementById('content');
-        content.style.display = content.style.display === 'none' ? 'block' : 'none';
-    }
+    // Implement the logic to change content here
+    console.log('Arrow button clicked');
+
+    // Get references to the elements
+    var state = document.getElementById('state');
+    var score = document.getElementById('score');
+    var avg_salary = document.getElementById('avg_salary');
+    var avg_age = document.getElementById('avg_age');
+
+    // Add fade-out class to trigger fade-out effect
+    state.classList.add('fade-out');
+    score.classList.add('fade-out');
+    avg_salary.classList.add('fade-out');
+    avg_age.classList.add('fade-out');
+
+    setTimeout(function () {
+        // Increment the currentIndex or reset to 0 if at the end
+        currentIndex = (currentIndex + 1) % keys.length;
+
+        // Get the current key
+        var currentKey = keys[currentIndex];
+
+        // Change content using the current key
+        state.textContent = "State: " + currentKey;
+        score.textContent = "Score: " + jsonData[currentKey].score;
+        avg_salary.textContent = "Average salary: " + jsonData[currentKey].avg_salary;
+        avg_age.textContent = "Average age: " + jsonData[currentKey].avg_age;
+
+        // Remove fade-out class to trigger fade-in effect
+        state.classList.remove('fade-out');
+        score.classList.remove('fade-out');
+        avg_salary.classList.remove('fade-out');
+        avg_age.classList.remove('fade-out');
+    }, 1000); // Adjust the delay as needed
+}
 </script>
 
 </body>

@@ -1,4 +1,22 @@
 {
-  "message": "This is the fetched data from JSON file.",
-  "altceva": "text nou"
+  "Texas": {
+    "score": 83.89,
+    "avg_salary": "-",
+    "avg_age": "-"
+  },
+  "Illinois": {
+    "score": 38.26,
+    "avg_salary": "-",
+    "avg_age": "-"
+  },
+  "Pennsylvania": {
+    "score": 26.93,
+    "avg_salary": "-",
+    "avg_age": "-"
+  },
+  "Ohio": {
+    "score": 25.66,
+    "avg_salary": "-",
+    "avg_age": "-"
+  }
 }

@@ -2,6 +2,7 @@ import os
 import openai
 from dotenv import load_dotenv
 
+
 def ask_chat_gpt(question):
     try:
         # Ensure the OPENAI_API_KEY environment variable is set
@@ -36,10 +37,13 @@ def ask_chat_gpt(question):
     except Exception as e:
         return f"An error occurred: {e}"
 
+
 def main():
     question = input("Ask a question: ")
-    answer = ask_chat_gpt("List me all the states in the USA separated by a comma.")
+    # answer = ask_chat_gpt("List me all the states in the USA separated by a comma.")
+    answer = ask_chat_gpt(question)
     print(answer)
+
 
 if __name__ == "__main__":
     main()

@@ -34,6 +34,11 @@ request_body = {
                     "region": region
                 },
                 "strictness": 3
+            },
+            {
+                "attribute": "company_industry",
+                "relation": "equals",
+                "value": industry,
             }
         ]
     }
@@ -50,7 +55,7 @@ states = "Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut,
 states = states.split(", ")
 
 
-def get_state_companies():
+def get_state_companies(industry):
     companies = {}
 
     with open("temp.json", "r") as f:
@@ -67,6 +72,8 @@ def get_state_companies():
             companies = json.load(f)
         except json.decoder.JSONDecodeError:
             companies = {}
+
+        request_body["filters"]["and"][1]["value"] = industry
 
         for state in states:
             request_body["filters"]["and"][0]["value"]["region"] = state
@@ -131,7 +138,8 @@ def count_revenues():
 
 # count_revenues()
 
-get_state_companies()
+
+get_state_companies("IT")
 # response = requests.post(url, headers=headers, json=request_body, params=params)
 # print(response.json()["result"])
 # print(len(response.json()['result']))

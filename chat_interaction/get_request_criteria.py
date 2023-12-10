@@ -26,7 +26,7 @@ def get_request_criteria(areas, industry):
     for area in areas:
         wages_question = f'What is the average salary for {industry} jobs in {area}?'
 
-        common_jobs_question = f'What are the 10 most common jobs in {area} from the list {industry}?'
+        common_jobs_question = f'What are the 5 most common jobs in {area} from the list {industry}?'
 
         age_range_question = f'Can you provide an estimate of the typical age range for jobs in {industry} within {area}?'
 

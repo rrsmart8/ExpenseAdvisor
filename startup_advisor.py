@@ -1,8 +1,10 @@
 import requests
 import json
 import constants as const
+import pandas as pd
 
 from chat_interaction.ask_chat_gpt import ask_chat_gpt
+import check_data as check
 
 def get_user_data():
     print("Hello, I am your startup advisor. I will help you to find the best industry for your startup.")
@@ -11,8 +13,9 @@ def get_user_data():
 
         "Company Name": "Samsung",
         "Revenue": 5400000000,
-        "Industry": "Electronics",
+        "Industry": "Business",
         "State": "New York",
+        "Number of Employees": 1000,
 
     }
 
@@ -87,21 +90,26 @@ def calculate_mean_revenue(file_path):
 
 
 def check_data(user, areas):
-    # Get the data from temp.json
+
+    # Revenue filter
     states_mean = calculate_mean_revenue("datasets/temp.json")
 
     for i in range(len(states_mean)):
         if states_mean[i][1] > user["Revenue"]:
             areas.remove(states_mean[i][0])
 
+    # Industry demand filter
+
 # TODO: Check the industry demand and sort them
+def check_industry_demand(industry):
+    data_gdp = check.get_states_gdp("datasets/states_gdp.csv")
+    data_disproprotionality = check.get_disproprotionality("datasets/disproprotionality.csv")
+    data_common_jobs = pd.read_csv("datasets/common_jobs.csv")
+    data_industry_demand = pd.read_csv("datasets/industry_demands.csv")
 
+    weight = check.create_industry_demand_weights(data_industry_demand, industry, data_common_jobs, data_disproprotionality, data_gdp)
 
-
-
-
-# TODO: Check employee
-
+    return weight
 
 def main():
 
@@ -114,6 +122,12 @@ def main():
     states = states.split(",")
 
     check_data(data, states)
+    weight_array = check_industry_demand(data["Industry"])
+
+    #TODO: Remove from weigth array the states where I cant affor to open with my revenue
+    wages_chat = []
+    #check.check_possible_openings(wages_array,wages_chat, data["Number of Employees"], 0.4, data["Revenue"])
+    
 
 
 if __name__ == "__main__":

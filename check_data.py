@@ -5,7 +5,9 @@ import requests
 import urllib.request
 import re
 from bs4 import BeautifulSoup
-from get_request_criteria import get_request_criteria
+from chat_interaction.get_request_criteria import get_request_criteria
+from chat_interaction.ask_chat_gpt import ask_chat_gpt
+import constants as const
 
 # states = "Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming"
 states = "New York, Texas"
@@ -25,6 +27,42 @@ def scrape_states_gdp(url):
         f.write(data)
     return data
 
+def prepare_industry_demand(path):
+    with open(path, "r") as f:
+        data = f.readlines()
+
+    data = [x.strip() for x in data]
+
+    # Remove all the empty lines
+    data = list(filter(None, data))
+
+    list_of_jobs = []
+    state_jobs = []
+    for i in range(len(data)):
+        if "Largest Occupations" in data[i]:
+            state = data[i].split(" ")[3] + " " + data[i].split(" ")[4]
+            state = state.split(",")[0]
+            print(state)
+            if state_jobs:
+                state_jobs.pop(1)
+                list_of_jobs.append(state_jobs)
+                state_jobs = []
+        
+        if "Largest Occupations" in data[i]:
+            state_jobs.append(state)
+        else:
+            state_jobs.append("\"" + data[i] + "\"")
+
+    # Append the last set of state_jobs after the loop
+    if state_jobs:
+        list_of_jobs.append(state_jobs)
+
+    # write the data to a csv file
+    with open("datasets/industry_demands.csv", "w") as f:
+        for state_jobs in list_of_jobs:
+            for job in state_jobs:
+                f.write(job + ",")
+            f.write("\n")
 
 def scrape_disproprotionality(url):
     response = requests.get(url)
@@ -59,6 +97,7 @@ def scrape_disproprotionality(url):
             f.write(line)
 
 
+
 def prepare_common_jobs_data(path):
     with open(path, "r") as f:
         data = f.readlines()
@@ -70,7 +109,6 @@ def prepare_common_jobs_data(path):
 
     list_of_jobs = []
     state_jobs = []
-    first_time = True
     for i in range(len(data)):
         if "Largest occupations" in data[i]:
             state = data[i].split(" ")[3] + " " + data[i].split(" ")[4]
@@ -84,7 +122,7 @@ def prepare_common_jobs_data(path):
         if "Largest occupations" in data[i]:
             state_jobs.append(state)
         else:
-            state_jobs.append(data[i])
+            state_jobs.append("\"" + data[i] + "\"")
 
     # Append the last set of state_jobs after the loop
     if state_jobs:
@@ -132,8 +170,6 @@ def get_disproprotionality(path):
     data = pd.read_csv(path)
     return data
 
-def check_data(data):
-    pass
 
 
 def main():
@@ -141,19 +177,18 @@ def main():
     data_gdp = get_states_gdp("datasets/states_gdp.csv")
     data_disproprotionality = get_disproprotionality("datasets/disproprotionality.csv")
     data_common_jobs = pd.read_csv("datasets/common_jobs.csv")
+    data_industry_demand = pd.read_csv("datasets/industry_demands.csv")
 
-    request = get_request_criteria(states, "IT")
-    anual_salaries = []
-    top_5_jobs = []
-    age_range = []
-    for i in range(len(request)):
-        anual_salaries.append(request[i][0])
-        top_5_jobs.append(request[i][1])
-        age_range.append(request[i][2])
+    print(data_industry_demand)
 
-    industry = "IT"
-
-
+    # request = get_request_criteria(states, const.industries)
+    # anual_salaries = []
+    # top_10_jobs = []
+    # age_range = []
+    # for i in range(len(request)):
+    #     anual_salaries.append(request[i][0])
+    #     top_10_jobs.append(request[i][1])
+    #     age_range.append(request[i][2])
 
 if __name__ == "__main__":
     main()

@@ -60,7 +60,6 @@ def correct_industry(industry):
     industries = const.industries
     answer = ask_chat_gpt("Find the best match for the industry " + industry + "in the following list: " + industries + ". Give me only one match")
 
-    print(answer)
     return answer
 
 # TODO: Parse the United States company list and calculate the mean revenue
@@ -107,7 +106,6 @@ def check_data(user, areas):
 def main():
 
     data = get_user_data()
-    print(data["Company Name"])
     check_company_size(data["Company Name"])
     industry = correct_industry(data["Industry"])
     data["Industry"] = industry

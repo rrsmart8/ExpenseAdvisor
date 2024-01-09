@@ -131,7 +131,8 @@ def check_industry_demand(industry):
 def main():
 
     data = get_user_data()
-    check_company_size(data["Company Name"])
+    if check_company_size(data["Company Name"]) == False:
+        return
     industry = correct_industry(data["Industry"])
     data["Industry"] = industry
 

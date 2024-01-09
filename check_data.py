@@ -191,6 +191,8 @@ def check_possible_openings(states, wages, rent, number_of_jobs, minimumLimit, m
 
 def create_industry_demand_weights(data_industry, industries, data_common_jobs, data_disproprotionality, data_gdp, chat_10_jobs=None):
     matching = data_industry[data_industry.iloc[:, 0] == industries]
+    if matching.empty:
+        return None
     matching = matching.iloc[:, 2].values[0]
     matching = matching.replace(",", "")
 

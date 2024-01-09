@@ -179,7 +179,7 @@ def get_disproprotionality(path):
 def check_possible_openings(states, wages, rent, number_of_jobs, minimumLimit, my_revenue):
     possible_states = []  # List to hold states that meet the criteria
 
-    for i in range(len(wages)):
+    for i in range(len(states)):
         if wages[i] is not None and number_of_jobs is not None:
             if wages[i] * number_of_jobs + rent < minimumLimit * my_revenue:
                 # Add states that meet the criteria to the new list
@@ -273,6 +273,7 @@ def main():
     weight = create_industry_demand_weights(data_industry_demand, "Business", data_common_jobs, data_disproprotionality, data_gdp)
 
     print(weight)
+
 
 if __name__ == "__main__":
     main()

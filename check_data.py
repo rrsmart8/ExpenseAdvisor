@@ -9,11 +9,21 @@ from chat_interaction.get_request_criteria import get_request_criteria
 from chat_interaction.ask_chat_gpt import ask_chat_gpt
 import constants as const
 
+def create_chat_criterias(states, industry):
+        request = get_request_criteria(states, industry)
+        anual_salaries = []
+        age_ranges = []
+        for i in range(len(request)):
+            anual_salaries.append(request[i][0])
+            age_ranges.append(request[i][1])
 
+        # Save the chat criteria to a JSON file
+        with open("datasets/chat_criterias.json", "w") as f:
+            json.dump({"anual_salaries": anual_salaries, "age_range": age_ranges}, f)
+
+## Region: Data preparation
 def scrape_states_gdp(url):
     data = pd.read_html(requests.get(url).content)[0].to_csv()
-
-    # Fortmat the data with only printables characters
     data = "".join([i for i in data if i.isprintable()])
 
     # Write the data to a csv file and add a \n after 10 commas
@@ -89,8 +99,6 @@ def prepare_industry_demand(path):
         with open("datasets/disproprotionality.csv", "w") as f:
             f.write(line)
 
-
-
 def prepare_common_jobs_data(path):
     with open(path, "r") as f:
         data = f.readlines()
@@ -127,8 +135,9 @@ def prepare_common_jobs_data(path):
             for job in state_jobs:
                 f.write(job + ",")
             f.write("\n")
+## End region
 
-
+## Region: Data extraction from the datasets
 def get_states_gdp(path):
     data = pd.read_csv(path)
     data.iloc[:, 0] = data.iloc[:, 0].str.replace("*", "")
@@ -140,18 +149,6 @@ def get_states_gdp(path):
     states = np.column_stack((states, gdp))
 
     return states
-def create_chat_criterias(states, industry):
-        request = get_request_criteria(states, industry)
-        anual_salaries = []
-        age_ranges = []
-        for i in range(len(request)):
-            anual_salaries.append(request[i][0])
-            age_ranges.append(request[i][1])
-
-        # Save the chat criteria to a JSON file
-        with open("datasets/chat_criterias.json", "w") as f:
-            json.dump({"anual_salaries": anual_salaries, "age_range": age_ranges}, f)
-
 
 def get_living_index(path):
     data = pd.read_csv(path)
@@ -165,7 +162,7 @@ def get_living_index(path):
         if "United States" in row["City"]:
             data_us.append(row)
 
-    # Multiply the Rent index by the average rent in New York
+    # Multiply the Rent index by the average rent in New York (currently 4000, but it can change)
     for row in data_us:
         row["Rent Index"] = row["Rent Index"] * 4000
 
@@ -174,8 +171,9 @@ def get_living_index(path):
 def get_disproprotionality(path):
     data = pd.read_csv(path)
     return data
+## End region
 
-
+## Region: Data analysis
 def check_possible_openings(states, wages, rent, number_of_jobs, minimumLimit, my_revenue):
     possible_states = []  # List to hold states that meet the criteria
 
@@ -186,11 +184,9 @@ def check_possible_openings(states, wages, rent, number_of_jobs, minimumLimit, m
                 possible_states.append(states[i])
 
     return possible_states
-        
 
-
-def create_industry_demand_weights(data_industry, industries, data_common_jobs, data_disproprotionality, data_gdp, chat_10_jobs=None):
-    matching = data_industry[data_industry.iloc[:, 0] == industries]
+def create_industry_demand_weights(data_industry, selected_industry, data_common_jobs, data_disproprotionality, data_gdp, chat_10_jobs=None):
+    matching = data_industry[data_industry.iloc[:, 0] == selected_industry]
     if matching.empty:
         return None
     matching = matching.iloc[:, 2].values[0]
@@ -212,7 +208,7 @@ def create_industry_demand_weights(data_industry, industries, data_common_jobs, 
         intustry_common = False
         idx = 0
         for i in range(1, 11):
-            if matching_area.iloc[:, i].values[0] == industries:
+            if matching_area.iloc[:, i].values[0] == selected_industry:
                 intustry_common = True
                 idx = i
                 break
@@ -227,7 +223,7 @@ def create_industry_demand_weights(data_industry, industries, data_common_jobs, 
         matching_disproprotionality = data_disproprotionality[data_disproprotionality.iloc[:, 1] == area.upper()]
         industry_disproprotionality = False
 
-        if matching_disproprotionality.iloc[:, 2].values[0] == industries:
+        if matching_disproprotionality.iloc[:, 2].values[0] == selected_industry:
             industry_disproprotionality = True
             weigth = matching_disproprotionality.iloc[:, 4].values[0]
             weigth_list.append([area, weigth])
@@ -256,6 +252,50 @@ def create_industry_demand_weights(data_industry, industries, data_common_jobs, 
 
     return weigth_list
 
+def calculate_mean_revenue(file_path):
+    try:
+        data = json.load(open(file_path, "r"))
+    except json.JSONDecodeError:
+        print("Error reading JSON file.")
+        return None
+
+    # Extracting revenue values
+    states_revenue = []
+    for state in data:
+        sum = 0
+        count = 0
+        for company,revenue in data[state].items():
+            if revenue is not None:
+                sum += revenue
+                count += 1
+        states_revenue.append([state, sum / count])
+
+    return states_revenue
+
+# Parse the data and remove the states where the revenue is higher than the user revenue
+def remove_higher_revenue_states(user, areas):
+
+    # Revenue filter
+    states_mean = calculate_mean_revenue("datasets/temp.json")
+
+    for i in range(len(states_mean)):
+        if states_mean[i][1] > user["Revenue"]:
+            areas.remove(states_mean[i][0])
+
+# Check the industry demand and return the weight array
+def check_industry_demand(industry):
+    # Load the datasets
+    data_gdp = get_states_gdp("datasets/states_gdp.csv")
+    data_disproprotionality = get_disproprotionality("datasets/disproprotionality.csv")
+    data_common_jobs = pd.read_csv("datasets/common_jobs.csv")
+    data_industry_demand = pd.read_csv("datasets/industry_demands.csv")
+
+    weight = create_industry_demand_weights(data_industry_demand, industry, data_common_jobs, data_disproprotionality, data_gdp)
+
+    return weight
+
+## End region
+
 def main():
     data_living = get_living_index("datasets/Cost_of_living_index_US.csv")
     data_gdp = get_states_gdp("datasets/states_gdp.csv")
@@ -263,19 +303,11 @@ def main():
     data_common_jobs = pd.read_csv("datasets/common_jobs.csv")
     data_industry_demand = pd.read_csv("datasets/industry_demands.csv")
 
-    # request = get_request_criteria(states, const.industries)
-    # anual_salaries = []
-    # top_10_jobs = []
-    # age_range = []
-    # for i in range(len(request)):
-    #     anual_salaries.append(request[i][0])
-    #     top_10_jobs.append(request[i][1])
-    #     age_range.append(request[i][2])
 
-    weight = create_industry_demand_weights(data_industry_demand, "Business", data_common_jobs, data_disproprotionality, data_gdp)
-
-    print(weight)
-
+    # Test the function
+    # selected_industry = "Business"
+    # weight = create_industry_demand_weights(data_industry_demand, selected_industry, data_common_jobs, data_disproprotionality, data_gdp)
+    # print(weight)
 
 if __name__ == "__main__":
     main()

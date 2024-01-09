@@ -1,26 +1,25 @@
 import requests
 import json
+import constants as const
 from industry_request import get_industries
 
-input_dict = {
-    "company_country": "United States",
-    "main_industry": "Software",
-}
+# Get the constants
+url = const.url_1
+api_key = const.api_key
+states = const.states
+states = states.split(",")
 
-# Define the API endpoint URL
-url = 'https://data.veridion.com/search/v2/companies'
+# Test data
+country = "United States"
+industry = "Business"
+region = "California"
 
-# Define the API key
-api_key = 'pXStedvXkA9pMcNK1tWvx_4DesmTsIZ47qfTa6WkqFxgrCvCqJA0mpALQ53J'
 
 # Define the request headers
 headers = {
     'x-api-key': api_key,
     'Content-Type': 'application/json'
 }
-
-industry = "Business"
-region = "California"
 
 # Define the request body as a Python dictionary
 request_body = {
@@ -30,7 +29,7 @@ request_body = {
                 "attribute": "company_location",
                 "relation": "equals",
                 "value": {
-                    "country": "United States",
+                    "country": country,
                     "region": region
                 },
                 "strictness": 3
@@ -50,10 +49,6 @@ params = {
     "page_size": 200,
     "pagination_token": next_page
 }
-
-states = "Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina, North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina, South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia, Wisconsin, Wyoming"
-states = states.split(", ")
-
 
 def get_state_companies(industry):
     companies = {}
@@ -120,7 +115,6 @@ def get_state_companies(industry):
                 with open("temp.json", "w") as res:
                     json.dump(companies, res, indent=4, sort_keys=True)
 
-
 def count_revenues():
     with open("state_companies.json", "r") as f:
         companies = json.load(f)
@@ -133,13 +127,3 @@ def count_revenues():
                 good.append(state)
         print(len(states))
         print(len(good))
-
-
-
-# count_revenues()
-
-
-get_state_companies("IT")
-# response = requests.post(url, headers=headers, json=request_body, params=params)
-# print(response.json()["result"])
-# print(len(response.json()['result']))

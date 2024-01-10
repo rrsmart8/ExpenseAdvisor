@@ -20,6 +20,18 @@ To install the Expansion Advisor, you need to clone this repository and install 
 
 ## Implementation
 
+![Expansion Advisor](readme_imgs/diagram.png)
+
+TODO: Add description for the diagram
+* In the first three steps, the programs filters the 
+
+* 
+
+* The final weighted score is calculated using the following formula
+
+
+> [Note: Momentarily, the Expansion Advisor only working regions in the United States.]
+
 ## Story
 
 The Expansion Advisor was created as a part of the [HackITall](https://hack.lsacbucuresti.ro/) hackathon in Bucharest, Romania. The project was created in 24 hours.

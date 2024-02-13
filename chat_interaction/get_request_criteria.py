@@ -1,17 +1,22 @@
 from chat_interaction.ask_chat_gpt import ask_chat_gpt
 import re
+import sys
 
+sys.path.append("../")
+import constants as const
+
+# Asking chat GPT for the average salary and the most common jobs
 def prelucrate_wages(wages_response):
     # Extracting the average salary
     salary_match = re.search(r'\$(\d+,\d+)', wages_response)
     average_salary = salary_match.group(1) if salary_match else None
     return average_salary
 
-# def prelucrate_common_jobs(common_jobs_response):
+def prelucrate_common_jobs(common_jobs_response):
     # Extracting the most common jobs
-#    jobs_text = common_jobs_response
-#    most_popular_jobs = [job.strip() for job in jobs_text.split('\n')]
-#    return most_popular_jobs
+    jobs_text = common_jobs_response
+    most_popular_jobs = [job.strip() for job in jobs_text.split('\n')]
+    return most_popular_jobs
 
 def prelucrate_age_range(age_range_response):
     age_range = age_range_response
@@ -26,6 +31,7 @@ def get_request_criteria(areas, industry):
     for area in areas:
         wages_question = f'What is the average salary for {industry} jobs in {area}?'
 
+        # Removed as it was not needed, but it can be added back if needed
         # common_jobs_question = f'What are the 5 most common jobs in {area} from the list {industry}?'
 
         age_range_question = f'Can you provide an estimate of the typical age range for jobs in {industry} within {area}?'
@@ -41,10 +47,10 @@ def get_request_criteria(areas, industry):
     return area_responses
 
 def main():
-    areas = ['New York', 'Texas']
+
+    # Testing the function
+    areas = const.states.split(",")
     industry = 'software engineering'
-
-
     print(get_request_criteria(areas, industry))
 
 

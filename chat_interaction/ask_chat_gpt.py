@@ -1,6 +1,13 @@
 import os
 import openai
 from dotenv import load_dotenv
+import sys
+
+sys.path.append("../")
+import constants as const
+
+# Get the constants
+chat_gpt_key = const.chat_gpt_key
 
 def ask_chat_gpt(question):
     try:
@@ -8,7 +15,7 @@ def ask_chat_gpt(question):
         load_dotenv()
 
         with open('.env', 'w') as f:
-            f.write(f'OPENAI_API_KEY={"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"}\n')
+            f.write(f'OPENAI_API_KEY={chat_gpt_key}\n')
 
         api_key = os.environ.get("OPENAI_API_KEY")
 
@@ -37,6 +44,8 @@ def ask_chat_gpt(question):
         return f"An error occurred: {e}"
 
 def main():
+
+    # Test the chat GPT
     question = input("Ask a question: ")
     answer = ask_chat_gpt(question)
     print(answer)

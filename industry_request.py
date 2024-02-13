@@ -1,10 +1,10 @@
 import requests
 import json
+import constants as const
 
-industry_url = "https://data.veridion.com/industries/v0"
-
-# Define the API key
-api_key = 'pXStedvXkA9pMcNK1tWvx_4DesmTsIZ47qfTa6WkqFxgrCvCqJA0mpALQ53J'
+# Get the constants
+industry_url = const.url_2
+api_key = const.api_key
 
 # Define the request headers
 headers = {

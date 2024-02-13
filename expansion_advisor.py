@@ -6,6 +6,11 @@ import pandas as pd
 from chat_interaction.ask_chat_gpt import ask_chat_gpt
 import check_data as check
 
+# Getting the constants
+URL = const.url_1
+API_KEY = const.api_key
+
+## Region: User data && data validation
 def get_user_data():
     print("Hello, I am your expansion advisor. I will help you to find the best industry for your business.")
 
@@ -26,6 +31,7 @@ def get_user_data():
 
         }
 
+    # Test data
     # data = {
     #
     #     "Company Name": "McDonald's",
@@ -35,16 +41,12 @@ def get_user_data():
     #     "Number of Employees": 1000,
     #
     # }
-
     return data
 
-# TODO: Check big or small company
-def check_company_size(company_name):
-    # Define the API endpoint URL
-    url = 'https://data.veridion.com/search/v2/companies'
-
-    # Define the API key
-    api_key = 'pXStedvXkA9pMcNK1tWvx_4DesmTsIZ47qfTa6WkqFxgrCvCqJA0mpALQ53J'
+def check_company_in_database(company_name):
+    # Define the request URL and API key
+    url = URL
+    api_key = API_KEY
 
     # Define the request headers
     headers = {
@@ -75,76 +77,29 @@ def check_company_size(company_name):
     print("Company found in the database")
     return True
 
-# TODO: Correct industry from Search API using ChatGPT API
+# Replace the given industry with the best match from the Veridion industry list
 def correct_industry(industry):
     industries = const.industries
     answer = ask_chat_gpt("Find the best match for the industry " + industry + "in the following list: " + industries + ". Give me only one match")
 
     return answer
 
-# TODO: Parse the United States company list and calculate the mean revenue
-
-def calculate_mean_revenue(file_path):
-    # Load the JSON data
-    try:
-        data = json.load(open(file_path, "r"))
-    except json.JSONDecodeError:
-        print("Error reading JSON file.")
-        return None
-
-    # Extracting revenue values
-    states_revenue = []
-    for state in data:
-        sum = 0
-        count = 0
-        for company,revenue in data[state].items():
-            if revenue is not None:
-                sum += revenue
-                count += 1
-        states_revenue.append([state, sum / count])
-
-    return states_revenue
-
-
-def check_data(user, areas):
-
-    # Revenue filter
-    states_mean = calculate_mean_revenue("datasets/temp.json")
-
-    for i in range(len(states_mean)):
-        if states_mean[i][1] > user["Revenue"]:
-            areas.remove(states_mean[i][0])
-
-    # Industry demand filter
-
-# TODO: Check the industry demand and sort them
-def check_industry_demand(industry):
-    data_gdp = check.get_states_gdp("datasets/states_gdp.csv")
-    data_disproprotionality = check.get_disproprotionality("datasets/disproprotionality.csv")
-    data_common_jobs = pd.read_csv("datasets/common_jobs.csv")
-    data_industry_demand = pd.read_csv("datasets/industry_demands.csv")
-
-    weight = check.create_industry_demand_weights(data_industry_demand, industry, data_common_jobs, data_disproprotionality, data_gdp)
-
-    return weight
+## End region
 
 def main():
 
     data = get_user_data()
-    check_company_size(data["Company Name"])
+    if check_company_in_database(data["Company Name"]) == False:
+        return
     industry = correct_industry(data["Industry"])
     data["Industry"] = industry
 
     states = const.states
     states = states.split(",")
 
-    check_data(data, states)
-    weight_array = check_industry_demand(data["Industry"])
+    check.remove_higher_revenue_states(data, states)
+    weight_array = check.check_industry_demand(data["Industry"])
 
-    #TODO: Remove from weigth array the states where I cant affor to open with my revenue
-    wages_chat = []
-
-   # Open the chat_criterias.json file and load the data
     try:
         chat_criterias = json.load(open("datasets/chat_criterias.json", "r"))
     except json.JSONDecodeError:
@@ -152,25 +107,22 @@ def main():
         return None
 
     # Extracting the anual wages
+    wages_chat = []
     for i in range(len(chat_criterias["anual_salaries"])):
         wages_chat.append(chat_criterias["anual_salaries"][i].replace(",", ""))
 
-    # Convert it to a number array
     wages_chat = [int(i) for i in wages_chat]
-
-    # Print all data before
     num_of_employees = data["Number of Employees"]
-
     meet_criteria_states = check.check_possible_openings(weight_array,wages_chat, 3000,num_of_employees, 0.5, data["Revenue"])
 
     if meet_criteria_states == []:
         print("You don't have sufficient revenue to open a new location in the United States.")
         return
+    
     print("The best states for your business are: " + str(meet_criteria_states))
 
     # Get the industry index from the industries list
     industry_index = -1
-
     ind_array = const.industries.split(", ")
 
     for i in range(len(ind_array)):
@@ -203,15 +155,10 @@ def main():
         print("The saturated nieches are: \n" + str(saturated_nieches))
     print()
 
-
     print("Best choice:")
     print(" -> Open new location " + data["Company Name"] + " in " + best_choice + ".")
     print(" -> In the industry " + industry +  " and the age range is " + age_range + ".")
-
-
     print("\nThank you for using our service. We hope you will have a scalable business.")
-
-
 
 if __name__ == "__main__":
     main()

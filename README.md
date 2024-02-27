@@ -22,12 +22,25 @@ To install the Expansion Advisor, you need to clone this repository and install 
 
 ![Expansion Advisor](readme_imgs/diagram.png)
 
-TODO: Add description for the diagram
-* In the first three steps, the programs filters the 
+* In the first three steps, the programs filters the data from the Veridion Data API to get the locations of the company and its competitors. As Veridion Data API has a strict structure for the categories, the program uses the Chat-GPT API to recognize the category from your input. Then, it uses the recognized category to filter the data from the Veridion Data API.
 
-* 
+* Using multiple datasets from trust-worthy and official government websites, the program calculates the weighted score for each state and city. The involvement of Chat-GPT in this process is to offer another layer of filtering by offering the 10 most common jobs in the state and the average wage beside the preexisting data. The weighted score is created by:
+    * check_possible_openings(states, wages, rent, number_of_jobs, minimumLimit, my_revenue):
+        ```
+        This function checks if there are possible job openings in each state based on given criteria. It calculates the total cost (wages * number_of_jobs + rent) and compares it against a threshold (minimumLimit * my_revenue) to determine if the state meets the criteria for potential job openings.
+        ```
+         
+    * create_industry_demand_weights(data_industry, selected_industry, data_common_jobs, data_disproportionality, data_gdp, chat_10_jobs=None):
+        ```
+        This function computes weights for each state based on industry demand. It considers factors like the number of jobs in the selected industry, disproportionality scores, and GDP to assign weights to each state.
+        ```
+    * calculate_mean_revenue(file_path):
+        ```
+        This function calculates the mean revenue for each state based on data provided in a JSON file. It computes the average revenue across different companies within each state.
+        ```
+* The final weighted score is filtered by checking the industry disproportionality in each state and how common is the industry in the state. Lastly, the list returned is sorted by the weighted score and if in any case the weighted score is the same, the list is sorted by the gdp of the state.
 
-* The final weighted score is calculated using the following formula
+* In the output process, Chat-GPT offers multiple insights about the state, like the average wage, the average age, the most common jobs, and the average rent. This is done to offer a better understanding of the state and to help the company make a better decision.
 
 
 > [Note: Momentarily, the Expansion Advisor only working regions in the United States.]
